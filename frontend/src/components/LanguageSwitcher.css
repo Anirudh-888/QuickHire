@@ -1,0 +1,34 @@
+.language-switcher {
+  position: fixed;
+  top: 1rem;
+  right: 1.5rem;
+  z-index: 1001;
+}
+
+.language-select {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.language-select:hover {
+  border-color: var(--primary);
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Adjust registration container to relative for absolute positioning of the switcher */
+.registration-container {
+  position: relative;
+}
