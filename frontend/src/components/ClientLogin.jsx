@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import '../index.css';
 
 const ClientLogin = ({ hideContainer }) => {
@@ -26,8 +28,8 @@ const ClientLogin = ({ hideContainer }) => {
     setMessage(t('btnProcessing'));
 
     try {
-      // Mock API call simulation
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Firebase Login
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
 
       setStatus('success');
       setMessage(t('loginSuccessMsg'));
@@ -35,13 +37,13 @@ const ClientLogin = ({ hideContainer }) => {
       // Reset form
       setFormData({ email: '', password: '' });
       
-      // Redirect after a short delay (e.g. to dashboard)
-      setTimeout(() => navigate('/'), 1500);
+      // Redirect after a short delay to dashboard
+      setTimeout(() => navigate('/client-dashboard'), 1500);
 
     } catch (error) {
       console.error(error);
       setStatus('error');
-      setMessage(t('errorMsg'));
+      setMessage(error.message || t('errorMsg'));
     }
   };
 

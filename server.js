@@ -1,14 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./config/db');
 
 // Load env vars
 dotenv.config();
-
-// Connect to database
-// Note: Uncomment this once MONGO_URI is set in .env
-// connectDB();
 
 const app = express();
 
@@ -25,14 +20,27 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Route files
 const userRoutes = require('./routes/userRoutes');
 const verificationRoutes = require('./routes/verificationRoutes');
+const agentRoutes = require('./routes/agentRoutes');
 
 // Mount routers
 app.use('/api/users', userRoutes);
 app.use('/api/verify', verificationRoutes);
+app.use('/api/agent', agentRoutes);
 
-app.get('/', (req, res) => {
-  res.send('QuickHire API is running...');
-});
+const fs = require('fs');
+
+// Serve static assets if the dist folder exists
+const distPath = path.join(__dirname, 'frontend/dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.get('*any', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('QuickHire API is running...');
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 

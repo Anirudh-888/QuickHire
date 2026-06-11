@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { protect } = require('../middleware/auth');
-const User = require('../models/User');
+const admin = require('../config/firebase');
 
 // Configure multer storage
 const storage = multer.diskStorage({
@@ -52,21 +52,21 @@ router.post('/upload-id', protect, upload.single('identityDocument'), async (req
       return res.status(400).json({ message: 'Please upload a file' });
     }
 
-    const userId = req.user._id;
+    const userId = req.user.id;
     const filePath = req.file.path;
 
     // Run the placeholder OCR service
     await performOCRService(filePath);
 
     // Update the user's verification status
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      {
-        identityProof: `/uploads/${req.file.filename}`,
-        verificationStatus: 'Pending',
-      },
-      { new: true }
-    );
+    const userRef = admin.firestore().collection('users').doc(userId);
+    await userRef.update({
+      identityProof: `/uploads/${req.file.filename}`,
+      verificationStatus: 'Pending',
+    });
+    
+    const docSnap = await userRef.get();
+    const updatedUser = docSnap.data();
 
     res.status(200).json({
       message: 'Identity document uploaded successfully. Profile is pending verification.',

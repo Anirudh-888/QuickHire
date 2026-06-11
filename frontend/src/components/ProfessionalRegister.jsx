@@ -2,6 +2,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Upload, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { auth, db, storage } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import '../index.css';
 
 const ProfessionalRegister = ({ onToggle, hideContainer }) => {
@@ -11,6 +15,7 @@ const ProfessionalRegister = ({ onToggle, hideContainer }) => {
     fullName: '',
     email: '',
     phoneNumber: '',
+    password: '',
   });
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('idle'); // idle, uploading, success, error
@@ -39,20 +44,37 @@ const ProfessionalRegister = ({ onToggle, hideContainer }) => {
     setMessage(t('statusUploading'));
 
     try {
-      // Mock API call simulation
-      await new Promise(resolve => setTimeout(resolve, 2500));
+      // 1. Create User
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+
+      // 2. Upload File to Storage
+      const storageRef = ref(storage, `identityDocuments/${user.uid}_${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
+      // 3. Save User to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        fullName: formData.fullName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        identityDocumentUrl: downloadURL,
+        role: "Professional",
+        isVerified: false,
+        createdAt: new Date().toISOString()
+      });
 
       setStatus('success');
       setMessage(t('successMsg'));
       
       // Reset form
-      setFormData({ fullName: '', email: '', phoneNumber: '' });
+      setFormData({ fullName: '', email: '', phoneNumber: '', password: '' });
       setFile(null);
 
     } catch (error) {
       console.error(error);
       setStatus('error');
-      setMessage(t('errorMsg'));
+      setMessage(error.message || t('errorMsg'));
     }
   };
 
@@ -100,6 +122,20 @@ const ProfessionalRegister = ({ onToggle, hideContainer }) => {
               value={formData.phoneNumber}
               onChange={handleInputChange}
               required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">{t('passwordLabel') || 'Password'}</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder={t('passwordPlaceholder') || 'Enter your password'}
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              className="password-input"
             />
           </div>
 

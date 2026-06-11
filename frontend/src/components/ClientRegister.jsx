@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
+import { auth, db } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import '../index.css';
 
 const ClientRegister = ({ hideContainer }) => {
@@ -28,8 +31,18 @@ const ClientRegister = ({ hideContainer }) => {
     setMessage(t('statusUploading'));
 
     try {
-      // Mock API call simulation
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+
+      // Save additional user data to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        fullName: formData.fullName,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        role: "Client",
+        createdAt: new Date().toISOString()
+      });
 
       setStatus('success');
       setMessage(t('clientRegSuccessMsg'));
@@ -43,7 +56,7 @@ const ClientRegister = ({ hideContainer }) => {
     } catch (error) {
       console.error(error);
       setStatus('error');
-      setMessage(t('errorMsg'));
+      setMessage(error.message || t('errorMsg'));
     }
   };
 

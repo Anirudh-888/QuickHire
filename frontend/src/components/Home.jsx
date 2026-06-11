@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Shield, Zap, Award, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import anirudhPhoto from '../assets/anirudh.jpg';
+import prajwalPhoto from '../assets/prajwal.jpg';
+import shivkumarPhoto from '../assets/shivkumar.jpg';
 import '../index.css';
 
 const Home = () => {
@@ -48,17 +51,23 @@ const Home = () => {
         <p className="section-subtitle">{t('meetBuildersSub', 'The passionate team behind QuickHire.')}</p>
         <div className="team-grid">
           <div className="team-member registration-card">
-            <div className="photo-placeholder"><Users size={48} /></div>
+            <div className="photo-placeholder">
+              <img src={anirudhPhoto} alt="S Anirudh" className="team-photo" />
+            </div>
             <h4>{t('teamAnirudh', 'S Anirudh')}</h4>
             <p>{t('roleAnirudh', 'Entire project lead ("Front and Back end")')}</p>
           </div>
           <div className="team-member registration-card">
-            <div className="photo-placeholder"><Users size={48} /></div>
+            <div className="photo-placeholder">
+              <img src={prajwalPhoto} alt="Prajwal MR" className="team-photo" />
+            </div>
             <h4>{t('teamPrajwal', 'Prajwal MR')}</h4>
             <p>{t('rolePrajwal', 'Front end')}</p>
           </div>
           <div className="team-member registration-card">
-            <div className="photo-placeholder"><Users size={48} /></div>
+            <div className="photo-placeholder">
+              <img src={shivkumarPhoto} alt="Shivkumar" className="team-photo" />
+            </div>
             <h4>{t('teamShivkumar', 'Shivkumar')}</h4>
             <p>{t('roleShivkumar', 'Backend')}</p>
           </div>

@@ -1,5 +1,4 @@
 const admin = require('../config/firebase');
-const User = require('../models/User');
 
 const protect = async (req, res, next) => {
   let idToken;
@@ -12,13 +11,15 @@ const protect = async (req, res, next) => {
       // Verify Firebase ID Token
       const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-      // We extract the user email or UID. Firebase usually gives us email and uid.
-      // Let's find the user in our DB based on the email from Firebase token
-      req.user = await User.findOne({ email: decodedToken.email });
+      // Fetch the user from Firestore
+      const userRef = admin.firestore().collection('users').doc(decodedToken.uid);
+      const docSnap = await userRef.get();
 
-      if (!req.user) {
+      if (!docSnap.exists) {
         return res.status(401).json({ message: 'User not found in database' });
       }
+
+      req.user = { id: docSnap.id, ...docSnap.data() };
 
       next();
     } catch (error) {

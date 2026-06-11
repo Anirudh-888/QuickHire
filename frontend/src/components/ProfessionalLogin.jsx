@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import '../index.css';
 
 const ProfessionalLogin = ({ onToggle }) => {
@@ -24,14 +26,15 @@ const ProfessionalLogin = ({ onToggle }) => {
     setMessage(t('btnProcessing') || 'Processing...');
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
       setStatus('success');
       setMessage(t('loginSuccessMsg') || 'Login successful!');
       setFormData({ email: '', password: '' });
-      setTimeout(() => window.location.href = '/', 1500);
+      // In future, redirect to professional dashboard. For now go to home.
+      setTimeout(() => window.location.href = '/professional-dashboard', 1500);
     } catch (error) {
       setStatus('error');
-      setMessage(t('errorMsg') || 'Error logging in.');
+      setMessage(error.message || t('errorMsg') || 'Error logging in.');
     }
   };
 
