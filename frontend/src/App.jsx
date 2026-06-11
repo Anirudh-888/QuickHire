@@ -6,7 +6,6 @@ import ClientDashboard from './components/ClientDashboard';
 import ProfessionalPortal from './components/ProfessionalPortal';
 import ProfessionalDashboard from './components/ProfessionalDashboard';
 import ContactUs from './components/ContactUs';
-import LanguageSwitcher from './components/LanguageSwitcher';
 import AIAgent from './components/AIAgent';
 import { ThemeProvider } from './context/ThemeContext';
 
@@ -15,7 +14,6 @@ function App() {
     <ThemeProvider>
       <Router>
         <div className="app-layout registration-container">
-          <LanguageSwitcher />
           <AIAgent />
           <Navbar />
           <main className="main-content">

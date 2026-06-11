@@ -1,7 +1,5 @@
 .language-switcher {
-  position: fixed;
-  top: 1rem;
-  right: 1.5rem;
+  display: inline-block;
   z-index: 1001;
 }
 

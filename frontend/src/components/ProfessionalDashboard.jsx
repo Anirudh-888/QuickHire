@@ -259,13 +259,13 @@ const ProfessionalDashboard = () => {
           </div>
 
           {/* ── Main Content ── */}
-          <div style={{
+          <div className="job-detail-grid" style={{
             display: 'grid', gridTemplateColumns: '1fr 1fr',
             gap: '0', flex: 1,
           }}>
 
             {/* Left: Description + Photos */}
-            <div style={{ borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column' }}>
+            <div className="job-detail-left" style={{ borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column' }}>
 
               {/* Description */}
               <div style={{ padding: '1.75rem', borderBottom: '1px solid var(--border)' }}>
@@ -299,7 +299,7 @@ const ProfessionalDashboard = () => {
             </div>
 
             {/* Right: Map + Apply */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="job-detail-right" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ padding: '1.75rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: '700', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--primary)', marginBottom: '0.5rem' }}>
                   <MapPin size={15} /> Exact Location
@@ -423,7 +423,20 @@ const ProfessionalDashboard = () => {
           </div>
 
           {/* Responsive: stack columns on mobile */}
-          <style>{`@media(max-width:700px){.job-detail-grid{grid-template-columns:1fr!important;}.job-detail-right{border-left:none!important;border-top:1px solid var(--border)}}`}</style>
+          <style>{`
+            @media (max-width: 768px) {
+              .job-detail-grid {
+                grid-template-columns: 1fr !important;
+              }
+              .job-detail-left {
+                border-right: none !important;
+                border-bottom: 1px solid var(--border) !important;
+              }
+              .job-detail-right {
+                border-top: 1px solid var(--border) !important;
+              }
+            }
+          `}</style>
         </div>
       </div>
     );
