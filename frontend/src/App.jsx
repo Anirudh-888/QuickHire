@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -7,13 +8,25 @@ import ProfessionalPortal from './components/ProfessionalPortal';
 import ProfessionalDashboard from './components/ProfessionalDashboard';
 import ContactUs from './components/ContactUs';
 import AIAgent from './components/AIAgent';
+import SplashLoader from './components/SplashLoader';
 import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    // Keep splash mounted slightly longer than the hide animation (4000ms total)
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ThemeProvider>
       <Router>
         <div className="app-layout registration-container">
+          {showSplash && <SplashLoader />}
           <AIAgent />
           <Navbar />
           <main className="main-content">
