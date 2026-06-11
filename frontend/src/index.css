@@ -1609,3 +1609,238 @@ body.dark ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.25);
 }
 
+/* --- GLOBAL MACOS GLASSMORPHISM & TRANSITIONS --- */
+
+/* Spring-like transition rule for all interactive items */
+.registration-card,
+.submit-btn,
+.premium-pill-btn,
+.nav-item,
+.mobile-nav-item,
+.portal-tabs,
+.portal-tab,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+select,
+textarea,
+.feedback-textarea,
+.floating-dock,
+.dock-icon-circle,
+.feature-card-premium,
+.theme-toggle-btn,
+.browser-window-mockup,
+.file-drop-zone,
+.upload-circle-btn {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glassmorphism for standard cards globally */
+.registration-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24px) saturate(130%);
+  -webkit-backdrop-filter: blur(24px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+body.dark .registration-card {
+  background: rgba(17, 24, 39, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.registration-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.06);
+}
+
+body.dark .registration-card:hover {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Glassmorphism for inputs globally */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+select,
+textarea,
+.feedback-textarea {
+  background-color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+}
+
+body.dark input[type="text"],
+body.dark input[type="email"],
+body.dark input[type="tel"],
+body.dark input[type="password"],
+body.dark input[type="date"],
+body.dark input[type="time"],
+body.dark select,
+body.dark textarea,
+body.dark .feedback-textarea {
+  background-color: rgba(17, 24, 39, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus,
+.feedback-textarea:focus {
+  background-color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+body.dark input[type="text"]:focus,
+body.dark input[type="email"]:focus,
+body.dark input[type="tel"]:focus,
+body.dark input[type="password"]:focus,
+body.dark input[type="date"]:focus,
+body.dark input[type="time"]:focus,
+body.dark select:focus,
+body.dark textarea:focus,
+body.dark .feedback-textarea:focus {
+  background-color: rgba(17, 24, 39, 0.75);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+/* Glassmorphic Navbar active background */
+.ios-navbar {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(24px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(120%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+body.dark .ios-navbar {
+  background: rgba(17, 24, 39, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.nav-item:hover, .nav-item.active {
+  background: rgba(79, 70, 229, 0.12) !important;
+}
+
+body.dark .nav-item:hover, body.dark .nav-item.active {
+  background: rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Portal Tabs and Portal Content */
+.portal-tabs {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important;
+}
+
+body.dark .portal-tabs {
+  background: rgba(17, 24, 39, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.portal-tab.active {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: var(--primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+body.dark .portal-tab.active {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Glassmorphic Global Submit Button */
+.submit-btn {
+  border-radius: 14px;
+  background: rgba(79, 70, 229, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(79, 70, 229, 0.4) !important;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2) !important;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  background: rgba(79, 70, 229, 0.95) !important;
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35) !important;
+}
+
+body.dark .submit-btn {
+  background: rgba(99, 102, 241, 0.8) !important;
+  border: 1px solid rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2) !important;
+}
+
+body.dark .submit-btn:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.95) !important;
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35) !important;
+}
+
+/* MacOS Premium Modal Dialogs */
+.modal-backdrop-premium {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  overflow: auto;
+}
+
+body.dark .modal-backdrop-premium {
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+
+.modal-shell-premium {
+  width: 94vw;
+  max-width: 980px;
+  max-height: 94vh;
+  overflow-y: auto;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08) !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  backdrop-filter: blur(28px) saturate(110%);
+  -webkit-backdrop-filter: blur(28px) saturate(110%);
+}
+
+body.dark .modal-shell-premium {
+  background: rgba(31, 41, 55, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55) !important;
+}
+
+.modal-header-premium {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.75) 0%, rgba(129, 140, 248, 0.75) 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark .modal-header-premium {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.65) 0%, rgba(129, 140, 248, 0.65) 100%) !important;
+}
+

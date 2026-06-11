@@ -71,15 +71,23 @@
   width: 380px;
   height: 580px;
   max-height: 80vh;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(28px) saturate(130%);
+  -webkit-backdrop-filter: blur(28px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   animation: chatCardOpen 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   transform-origin: bottom right;
+}
+
+body.dark .ai-chat-card {
+  background: rgba(17, 24, 39, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 }
 
 @keyframes chatCardOpen {
@@ -96,12 +104,16 @@
 /* Header */
 .ai-chat-header {
   padding: 1.25rem;
-  background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%);
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.75) 0%, rgba(129, 140, 248, 0.75) 100%);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark .ai-chat-header {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.6) 0%, rgba(129, 140, 248, 0.6) 100%);
 }
 
 .ai-chat-header-info {
@@ -244,11 +256,11 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  background: linear-gradient(180deg, var(--surface) 0%, rgba(243, 244, 246, 0.3) 100%);
+  background: transparent;
 }
 
 body.dark .ai-messages-area {
-  background: linear-gradient(180deg, var(--surface) 0%, rgba(17, 24, 39, 0.2) 100%);
+  background: transparent;
 }
 
 .ai-message {
@@ -306,14 +318,19 @@ body.dark .ai-messages-area {
 }
 
 .ai-message.ai .ai-msg-bubble {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.65);
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-top-left-radius: 4px;
 }
 
+body.dark .ai-message.ai .ai-msg-bubble {
+  background: rgba(17, 24, 39, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .ai-message.user .ai-msg-bubble {
-  background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%);
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.8) 0%, rgba(99, 102, 241, 0.8) 100%);
   color: white;
   border-top-right-radius: 4px;
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
@@ -354,13 +371,17 @@ body.dark .ai-messages-area {
 /* Suggestion Chips */
 .ai-chips-wrapper {
   padding: 0.5rem 1.25rem;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
+  background: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   gap: 8px;
   overflow-x: auto;
   scrollbar-width: none; /* Firefox */
   flex-shrink: 0;
+}
+
+body.dark .ai-chips-wrapper {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .ai-chips-wrapper::-webkit-scrollbar {
@@ -389,33 +410,39 @@ body.dark .ai-messages-area {
 /* Input Area */
 .ai-chat-input-area {
   padding: 1rem 1.25rem;
-  border-top: 1px solid var(--border);
-  background: var(--surface);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: transparent;
   display: flex;
   gap: 8px;
   align-items: center;
   flex-shrink: 0;
 }
 
+body.dark .ai-chat-input-area {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .ai-input-field {
   flex: 1;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 24px;
   padding: 0.65rem 1.1rem;
   font-size: 0.9rem;
-  background: #f9fafb;
+  background: rgba(255, 255, 255, 0.6);
   color: var(--text-primary);
-  transition: all 0.2s;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body.dark .ai-input-field {
-  background: #111827;
+  background: rgba(17, 24, 39, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .ai-input-field:focus {
   outline: none;
   border-color: var(--primary);
-  background: var(--surface);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
 }
 
 .ai-send-btn {

@@ -178,40 +178,17 @@ const ProfessionalDashboard = () => {
     return (
       <div
         onClick={onClose}
-        style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(0,0,0,0.55)',
-          backdropFilter: 'blur(6px)',
-          WebkitBackdropFilter: 'blur(6px)',
-          zIndex: 9999,
-          display: 'flex', justifyContent: 'center', alignItems: 'center',
-          padding: '0',    /* no padding so dark bars don't show on sides */
-          overflow: 'auto',
-        }}
+        className="modal-backdrop-premium"
       >
         {/* ── Modal Shell ── */}
         <div
           onClick={e => e.stopPropagation()}
-          className="animate-fade-in-up"
-          style={{
-            width: '94vw',          /* fills most of the viewport */
-            maxWidth: '980px',
-            maxHeight: '94vh',
-            overflowY: 'auto',
-            borderRadius: '16px',
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-            boxShadow: '0 32px 80px rgba(0,0,0,0.4)',
-            position: 'relative',
-            display: 'flex', flexDirection: 'column',
-            margin: 'auto',         /* centres inside the flex overlay */
-          }}
+          className="animate-fade-in-up modal-shell-premium"
         >
 
           {/* ── Coloured Top Banner ── */}
-          <div style={{
-            background: 'linear-gradient(135deg, var(--primary) 0%, #818cf8 100%)',
-            borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0',
+          <div className="modal-header-premium" style={{
+            borderRadius: '20px 20px 0 0',
             padding: '2rem 2rem 1.5rem',
             position: 'relative',
           }}>
