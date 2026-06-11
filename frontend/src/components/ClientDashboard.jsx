@@ -106,7 +106,10 @@ const ClientDashboard = () => {
 
   // Run on mount
   useEffect(() => {
-    detectLocation();
+    const timer = setTimeout(() => {
+      detectLocation();
+    }, 0);
+    return () => clearTimeout(timer);
   }, [detectLocation]);
 
   // ── Geocoding: runs whenever street, city, or pincode change ──────────────
@@ -271,6 +274,7 @@ const ClientDashboard = () => {
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
+                  style={{ cursor: 'pointer' }}
                   required
                 />
               </div>
@@ -281,6 +285,7 @@ const ClientDashboard = () => {
                   name="time"
                   value={formData.time}
                   onChange={handleChange}
+                  style={{ cursor: 'pointer' }}
                   required
                 />
               </div>
@@ -304,13 +309,17 @@ const ClientDashboard = () => {
           <div className="form-section">
             <h3 className="section-heading"><Upload size={20} /> Upload Photos <span style={{ fontWeight: 400, fontSize: '0.8rem', color: '#9ca3af' }}>(optional)</span></h3>
             <div className="file-drop-zone">
-              <Upload size={32} className="drop-icon" />
-              <p>Drag and drop photos of the repair here, or click to browse</p>
+              <div className="upload-circle-btn">
+                <Upload size={20} />
+              </div>
+              <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
+                Drag and drop photos or click to browse
+              </p>
               <input type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden-file-input" />
             </div>
             {files.length > 0 && (
-              <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#6ee7b7' }}>
-                {files.length} photo(s) selected
+              <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 600 }}>
+                ✓ {files.length} photo(s) selected
               </p>
             )}
             {/* Upload progress bar */}
@@ -324,7 +333,7 @@ const ClientDashboard = () => {
                   <div style={{
                     height: '100%',
                     width: `${uploadProgress.total ? (uploadProgress.done / uploadProgress.total) * 100 : 0}%`,
-                    background: 'linear-gradient(90deg, #6ee7b7, #3b82f6)',
+                    background: 'linear-gradient(90deg, #10b981, #3b82f6)',
                     borderRadius: '9999px',
                     transition: 'width 0.3s ease'
                   }} />
