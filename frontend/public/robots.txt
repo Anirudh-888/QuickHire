@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quickhire-web-dkgwe2fvd3c4dpha.centralindia-01.azurewebsites.net/sitemap.xml
