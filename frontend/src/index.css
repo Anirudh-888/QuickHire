@@ -482,11 +482,108 @@ body {
   display: none;
 }
 
+/* Isolated Floating Logo with Glowing and Continuous Rotating Ring */
+.floating-logo-container {
+  position: fixed;
+  top: 0.8rem;
+  left: calc(50% - 500px - 5.5rem);
+  width: 64px;
+  height: 64px;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-glow-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(52, 211, 153, 0.25) 60%, transparent 100%);
+  filter: blur(8px);
+  z-index: -1;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.logo-animated-ring {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(52, 211, 153, 0.6);
+  border-top-color: rgba(99, 102, 241, 0.8);
+  border-bottom-color: rgba(52, 211, 153, 0.8);
+  animation: spinLogoRing 8s linear infinite;
+  pointer-events: none;
+}
+
+.isolated-logo-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.floating-logo-container:hover .isolated-logo-img {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.floating-logo-container:hover .logo-animated-ring {
+  animation-duration: 4s;
+  border-color: rgba(99, 102, 241, 0.9);
+}
+
+@keyframes spinLogoRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; filter: blur(6px); }
+}
+
+/* For screens where the navbar might overlap with the logo */
+@media (max-width: 1159px) and (min-width: 769px) {
+  .floating-logo-container {
+    left: 1.5rem;
+  }
+  .ios-navbar {
+    left: 7rem !important;
+    right: 1.5rem !important;
+    max-width: none !important;
+  }
+}
+
 @media (max-width: 768px) {
+  .floating-logo-container {
+    left: 0.75rem;
+    top: 0.55rem;
+    width: 44px;
+    height: 44px;
+  }
+  .logo-animated-ring {
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-width: 1.5px;
+  }
   .ios-navbar {
     top: 0.5rem;
-    left: 0.5rem;
-    right: 0.5rem;
+    left: 4.5rem !important;
+    right: 0.5rem !important;
     padding: 0.6rem 1.25rem;
     border-radius: 18px;
   }
@@ -1842,5 +1939,131 @@ body.dark .modal-shell-premium {
 
 body.dark .modal-header-premium {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.65) 0%, rgba(129, 140, 248, 0.65) 100%) !important;
+}
+
+/* --- DARK MODE OUTLINES & BOUNDARIES ENHANCEMENT --- */
+body.dark {
+  /* Elevate border brightness in dark mode */
+  --border: rgba(255, 255, 255, 0.25);
+}
+
+/* 1. All Windows / Panels / Cards */
+body.dark .registration-card,
+body.dark .job-card,
+body.dark .modal-shell-premium,
+body.dark .browser-window-mockup,
+body.dark .feature-card-premium,
+body.dark .portal-tabs,
+body.dark .ai-chat-card {
+  border: 1px solid rgba(99, 102, 241, 0.45) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Make inner grid dividers in details modal neat */
+body.dark .job-detail-left {
+  border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+/* 2. Form Fields, Inputs & Dropdowns */
+body.dark .feedback-textarea, 
+body.dark input[type="date"], 
+body.dark input[type="time"], 
+body.dark select,
+body.dark input[type="text"],
+body.dark input[type="email"],
+body.dark input[type="password"],
+body.dark input[type="tel"],
+body.dark .ai-input-field {
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+body.dark .feedback-textarea:focus, 
+body.dark input[type="date"]:focus, 
+body.dark input[type="time"]:focus, 
+body.dark select:focus,
+body.dark input[type="text"]:focus,
+body.dark input[type="email"]:focus,
+body.dark input[type="password"]:focus,
+body.dark input[type="tel"]:focus,
+body.dark .ai-input-field:focus {
+  border-color: rgba(99, 102, 241, 0.85) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
+}
+
+/* Dashed border upload areas */
+body.dark .file-drop-zone,
+body.dark .file-upload-box {
+  border: 2px dashed rgba(99, 102, 241, 0.4) !important;
+}
+
+body.dark .file-drop-zone:hover,
+body.dark .file-upload-box:hover {
+  border-color: rgba(99, 102, 241, 0.8) !important;
+}
+
+/* 3. All Buttons */
+body.dark .submit-btn,
+body.dark .premium-pill-btn,
+body.dark .google-btn,
+body.dark .home-btn,
+body.dark .theme-toggle-btn,
+body.dark .upload-circle-btn,
+body.dark .ai-send-btn,
+body.dark .ai-header-btn {
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark .submit-btn:hover:not(:disabled),
+body.dark .premium-pill-btn:hover,
+body.dark .google-btn:hover,
+body.dark .home-btn:hover,
+body.dark .theme-toggle-btn:hover,
+body.dark .upload-circle-btn:hover,
+body.dark .ai-send-btn:hover:not(:disabled),
+body.dark .ai-header-btn:hover {
+  border-color: rgba(99, 102, 241, 0.8) !important;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35) !important;
+}
+
+/* Secondary outline button style for dark mode */
+body.dark .home-btn.outline,
+body.dark .premium-pill-btn.secondary {
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark .home-btn.outline:hover,
+body.dark .premium-pill-btn.secondary:hover {
+  border-color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 4. Navbar Options and Container */
+body.dark .ios-navbar {
+  border: 1px solid rgba(99, 102, 241, 0.45) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark .nav-item,
+body.dark .mobile-nav-item,
+body.dark .language-select {
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  margin: 0 2px;
+}
+
+body.dark .nav-item:hover,
+body.dark .nav-item.active,
+body.dark .mobile-nav-item:hover,
+body.dark .mobile-nav-item.active {
+  border-color: rgba(99, 102, 241, 0.75) !important;
+  background: rgba(99, 102, 241, 0.25) !important;
+}
+
+body.dark .language-select {
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+body.dark .language-select:focus {
+  border-color: rgba(99, 102, 241, 0.8) !important;
 }
 

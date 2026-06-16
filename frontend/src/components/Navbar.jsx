@@ -19,12 +19,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="ios-navbar animate-fade-in-up">
-      <div className="nav-container">
-        <Link to="/" className="nav-logo" onClick={closeMenu}>
-          <img src="/logo.png" alt="QuickHire" className="nav-logo-img" />
-          <span className="nav-brand">QuickHire</span>
-        </Link>
+    <>
+      {/* Isolated Floating Logo with Glowing and Continuous Rotating Ring */}
+      <Link to="/" className="floating-logo-container" onClick={closeMenu}>
+        <div className="logo-glow-effect"></div>
+        <div className="logo-animated-ring"></div>
+        <img src="/logo.png" alt="QuickHire" className="isolated-logo-img" />
+      </Link>
+
+      <nav className="ios-navbar animate-fade-in-up">
+        <div className="nav-container">
+          <Link to="/" className="nav-logo" onClick={closeMenu}>
+            <span className="nav-brand">QuickHire</span>
+          </Link>
         
         {/* Desktop Links */}
         <div className="nav-links">
@@ -72,6 +79,7 @@ const Navbar = () => {
         </div>
       )}
     </nav>
+    </>
   );
 };
 
