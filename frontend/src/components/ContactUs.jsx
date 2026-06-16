@@ -25,15 +25,15 @@ const ContactUs = () => {
           <h2>Our Office</h2>
           <div className="info-item">
             <MapPin className="info-icon" />
-            <p>123 QuickHire Tower, Tech Park<br/>Bangalore, 560001</p>
+            <p>Tomorrow's Engineering Club MVJCE<br/>Bangalore, 560067</p>
           </div>
           <div className="info-item">
             <Phone className="info-icon" />
-            <p>+91 98765 43210</p>
+            <p>+91 8867020544</p>
           </div>
           <div className="info-item">
             <Mail className="info-icon" />
-            <p>support@quickhire.dummy.com</p>
+            <p>geniusanipediainhs@gmail.com</p>
           </div>
         </div>
 
