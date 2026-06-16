@@ -352,8 +352,8 @@ body {
 
 /* Home Logo */
 .home-logo {
-  width: 80px;
-  height: 80px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
   margin: 0 auto 1rem;
@@ -434,8 +434,8 @@ body {
 }
 
 .nav-logo-img {
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
 }
 

@@ -141,8 +141,8 @@
 }
 
 .reveal-logo-ring {
-  width: 130px;
-  height: 130px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   border: 2px dashed rgba(52, 211, 153, 0.4);
   position: absolute;
@@ -216,7 +216,7 @@
     font-size: 0.95rem;
   }
   .reveal-logo-ring {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
   }
 }
