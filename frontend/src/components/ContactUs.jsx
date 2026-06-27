@@ -25,15 +25,15 @@ const ContactUs = () => {
           <h2>Our Office</h2>
           <div className="info-item">
             <MapPin className="info-icon" />
-            <p>Tomorrow's Engineering Club MVJCE<br/>Bangalore, 560067</p>
+            <p>Tomorrow's Engineering Club MVJCE Bangalore, 560067</p>
           </div>
           <div className="info-item">
             <Phone className="info-icon" />
-            <p>+91 8867020544</p>
+            <p>8867020544</p>
           </div>
           <div className="info-item">
             <Mail className="info-icon" />
-            <p>geniusanipediainhs@gmail.com</p>
+            <p>geniuanipediainhs@gmail.com</p>
           </div>
         </div>
 

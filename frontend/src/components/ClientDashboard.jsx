@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Upload, MapPin, Calendar, Clock, Wrench, Loader2, CheckCircle, AlertCircle, Search } from 'lucide-react';
+import { Upload, MapPin, Calendar, Clock, Wrench, Loader2, CheckCircle, AlertCircle, Search, X } from 'lucide-react';
 import { db, storage, auth } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -52,6 +52,8 @@ const ClientDashboard = () => {
     description: ''
   });
   const [files, setFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({ done: 0, total: 0 });
   const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: '' }
@@ -151,9 +153,53 @@ const ClientDashboard = () => {
 
   const handleFileChange = (e) => {
     if (e.target.files) {
-      setFiles(Array.from(e.target.files));
+      const selectedFiles = Array.from(e.target.files);
+      const newPreviews = selectedFiles.map(file => URL.createObjectURL(file));
+      
+      setImagePreviews(prev => {
+        prev.forEach(url => URL.revokeObjectURL(url));
+        return newPreviews;
+      });
+      setFiles(selectedFiles);
     }
   };
+
+  const handleRemoveFile = (index) => {
+    URL.revokeObjectURL(imagePreviews[index]);
+    setFiles(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files) {
+      const droppedFiles = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+      if (droppedFiles.length > 0) {
+        const newPreviews = droppedFiles.map(file => URL.createObjectURL(file));
+        setImagePreviews(prev => {
+          prev.forEach(url => URL.revokeObjectURL(url));
+          return newPreviews;
+        });
+        setFiles(droppedFiles);
+      }
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [imagePreviews]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -193,6 +239,8 @@ const ClientDashboard = () => {
 
       setStatus({ type: 'success', message: 'Service request successfully submitted!' });
       setFormData({ category: '', date: '', time: '', street: '', city: '', pincode: '', description: '' });
+      imagePreviews.forEach(url => URL.revokeObjectURL(url));
+      setImagePreviews([]);
       setFiles([]);
       setPosition(null);
       setUploadProgress({ done: 0, total: 0 });
@@ -308,7 +356,12 @@ const ClientDashboard = () => {
           {/* ── Upload Photos ────────────────────────────────────────────── */}
           <div className="form-section">
             <h3 className="section-heading"><Upload size={20} /> Upload Photos <span style={{ fontWeight: 400, fontSize: '0.8rem', color: '#9ca3af' }}>(optional)</span></h3>
-            <div className="file-drop-zone">
+            <div 
+              className={`file-drop-zone ${isDragging ? 'dragging' : ''}`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <div className="upload-circle-btn">
                 <Upload size={20} />
               </div>
@@ -317,6 +370,59 @@ const ClientDashboard = () => {
               </p>
               <input type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden-file-input" />
             </div>
+
+            {/* Thumbnail previews */}
+            {imagePreviews.length > 0 && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))',
+                gap: '0.75rem',
+                marginTop: '1rem',
+                padding: '0.75rem',
+                backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                borderRadius: '12px',
+                border: '1.5px solid var(--border)'
+              }}>
+                {imagePreviews.map((url, idx) => (
+                  <div key={idx} style={{
+                    position: 'relative',
+                    aspectRatio: '1',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    border: '1.5px solid var(--border)',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+                  }}>
+                    <img src={url} alt={`Preview ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveFile(idx)}
+                      style={{
+                        position: 'absolute',
+                        top: '4px',
+                        right: '4px',
+                        background: 'rgba(239, 68, 68, 0.9)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '20px',
+                        height: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = '#dc2626'}
+                      onMouseOut={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.9)'}
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {files.length > 0 && (
               <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 600 }}>
                 ✓ {files.length} photo(s) selected
